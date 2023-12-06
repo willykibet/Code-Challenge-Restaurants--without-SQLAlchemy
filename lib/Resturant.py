@@ -1,34 +1,28 @@
-from lib.review import *
-
-class Customer:
-    _all = []
+class Restaurant:
+    all_restaurants = []
 
     def __init__(self, name):
-        #the airline that's being initialized add an airline to _all[]
-        Customer._all.append(self)
-        self._name = name
+        self.name = name
+        self.reviews = []
+        Restaurant.all_restaurants.append(self)
 
-    @property
     def name(self):
-        return self._name
-    # name = property(name)
+        return self.name
 
-    @name.setter
-    def name(self, name):
-        self._name = name
+    def reviews(self):
+        return self.reviews
 
-    def add_review(restaurant, content):
-        Review(restaurant, self, content)
+    def customers(self):
+        return list({review.customer for review in self.reviews})
 
     @classmethod
     def all(cls):
-        return cls._all
-
-    @classmethod
-    def find_all_by_name(cls, name):
-        return [customer for customer in cls.all() if customer.name == name]
-
-    @classmethod
-    def find_by_name(cls, name):
-        return [customer for customer in cls.all() if customer.name == name][0]
-xs
+        return cls.all_restaurants
+    
+    def average_star_rating(self):
+        total_ratings = sum(review.rating for review in self.reviews)
+        num_reviews = len(self.reviews)
+        if num_reviews > 0:
+            return total_ratings / num_reviews
+        else:
+            return 0  # Return 0 if there are no reviews yet
